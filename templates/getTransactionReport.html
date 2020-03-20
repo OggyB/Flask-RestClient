@@ -1,0 +1,41 @@
+{% extends 'dashboard.html' %}
+{% block title %}
+Get Transaction Report
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h1>Get Transaction Report</h1> <hr>
+   <form action="/dashboard/gettransactionreport" method="POST">
+
+       <div class="row">
+        <div class="col-md-3">
+            From:  <input id="datepicker" name="fromDate" type="date" />
+        </div>
+        <div class="col-md-3">
+             To: <input id="datepicker2" name="toDate" type="date" />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary"> GO </button>
+        </div>
+    </div>
+
+
+    </form>
+    {% if data %}
+{% if data.response %}
+
+    <ul class="list-group">
+        {% for transaction in data.response %}
+  <li class="list-group-item">Count : {{transaction.count}} Total:   {{ '{:7,.0f}'.format(transaction.total) }} {{transaction.currency}}</li>
+
+{% endfor %}
+
+</ul>
+{% else %}
+    {{data}}
+    {% endif %}
+    {% endif %}
+</div>
+
+
+{% endblock %}

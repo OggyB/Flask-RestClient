@@ -1,0 +1,84 @@
+{% extends 'dashboard.html' %}
+{% block title %}
+Get Transaction Query
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h1>Get Transaction Query</h1>
+        <form action="/dashboard/gettransactionquery" method="POST">
+
+       <div class="row">
+        <div class="col-md-3">
+            From:  <input id="datepicker" name="fromDate" type="date" />
+        </div>
+        <div class="col-md-3">
+             To: <input id="datepicker2" name="toDate" type="date" />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary"> GO </button>
+        </div>
+    </div>
+
+
+    </form>
+{% if data %}
+
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Number</th>
+      <th scope="col">Email</th>
+        <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for data in data.data %}
+    <tr>
+      <th scope="row"></th>
+      <td>{{data.customerInfo.billingFirstName}} {{data.customerInfo.billingLastName}}</td>
+      <td>{{data.customerInfo.number}}</td>
+      <td>{{data.customerInfo.email}}</td>
+       <td>
+           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#a{{data.transaction.merchant.transactionId}}">
+                        Show Details
+            </button>
+       </td>
+        <div class="modal" id="a{{data.transaction.merchant.transactionId}}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Details</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <li class="list-group-item">Merchant Info : Original amount ={{data.fx.merchant.originalAmount}} {{data.fx.merchant.originalCurrency}} Converted amount = {{data.fx.merchant.convertedAmount}} {{data.fx.merchant.convertedCurrency}}</li>
+          <li class="list-group-item">Transaction - {{data.transaction.merchant.transactionId}} : Type = {{data.transaction.merchant.type}} Operation = {{data.transaction.merchant.operation}} - {{data.transaction.merchant.created_at}} Message = {{data.transaction.merchant.message}} Reference No = {{data.transaction.merchant.referenceNo}}</li>
+          <li class="list-group-item">Acquirer Info : {{data.acquirer.name}} Code = {{data.acquirer.code}} Type = {{data.acquirer.type}}</li>
+
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+    </tr>
+{% endfor %}
+
+  </tbody>
+</table>
+    {% endif %}
+</div>
+
+{% endblock %}

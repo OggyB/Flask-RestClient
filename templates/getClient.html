@@ -1,0 +1,53 @@
+{% extends 'dashboard.html' %}
+{% block title %}
+Get Client
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h1>Get Client</h1>
+    <form action="/dashboard/getclient" method="POST">
+    <div class="form-group">
+        <label>Transaction ID</label>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                <input type="text" class="form-control" id="transactionId" name="transactionId">
+            </div>
+            <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary">GO</button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</form>
+{% if data %}
+{% if data.customerInfo %}
+
+    <ul class="list-group">
+  <li class="list-group-item">Created Date : {{data.customerInfo.created_at}}</li>
+  <li class="list-group-item">Updated Date : {{data.customerInfo.updated_at}}</li>
+  <li class="list-group-item">Deleted Date : {{data.customerInfo.deleted_at}}</li>
+  <li class="list-group-item">Account Number : {{data.customerInfo.number}}</li>
+  <li class="list-group-item">Expire Date : {{data.customerInfo.expiryYear}}-{{data.customerInfo.expiryMonth}}</li>
+
+        <li class="list-group-item">Mail : {{data.customerInfo.email}}</li>
+  <li class="list-group-item">Date of birth : {{data.customerInfo.birthday}}</li>
+  <li class="list-group-item">Gender : {{data.customerInfo.gender}}</li> <hr>
+        <h3>Billing Information</h3>
+  <li class="list-group-item">Billing Name : {{data.customerInfo.billingTitle}} {{data.customerInfo.billingFirstName}} {{data.customerInfo.billingLastName}}  </li>
+  <li class="list-group-item">Billing Address : {{data.customerInfo.billingAddress1}} {{data.customerInfo.billingCity}} / {{data.customerInfo.billingCountry}}  </li> <hr>
+        <h3>Shipping Information</h3>
+         <li class="list-group-item">Billing Name : {{data.customerInfo.shippingTitle}} {{data.customerInfo.shippingFirstName}} {{data.customerInfo.shippingLastName}}  </li>
+  <li class="list-group-item">Billing Address : {{data.customerInfo.shippingAddress1}} {{data.customerInfo.shippingCity}} / {{data.customerInfo.shippingCountry}}  </li>
+         <li class="list-group-item"> Phone : {{data.customerInfo.shippingPhone}}  </li>
+</ul>
+{% else %}
+    {{data}}
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
